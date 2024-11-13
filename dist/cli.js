@@ -69,6 +69,7 @@ function formatOutput(sortedScores) {
         output += `${rank}. ${teamName}: ${teamScore} ${pointWord}\n`;
         lastScore = teamScore;
     });
+    output = output.trim();
 }
 function scoreGame(input) {
     const [team1Data, team2Data] = input.split(", ");

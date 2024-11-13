@@ -57,6 +57,8 @@ function formatOutput(sortedScores: [string, number][]) {
         output += `${rank}. ${teamName}: ${teamScore} ${pointWord}\n`;
         lastScore = teamScore;
     });
+
+    output = output.trim();
 }
 
 function scoreGame(input: string) {
