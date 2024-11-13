@@ -30,7 +30,7 @@ export function sortScores(scores: { [key: string]: number }): [string, number][
     return Object.entries(scores).sort((a, b) => b[1] - a[1]);
 }
 
-export function formatOutput(sortedScores: [string, number][]): string {
+export function rankAndFormatScores(sortedScores: [string, number][]): string {
     let pointWord: string;
     let rank: number = 1;
     let lastScore: number | null = null;
@@ -55,5 +55,5 @@ export function formatOutput(sortedScores: [string, number][]): string {
 export function processInput(input: string[]): string {
     const finalScores = input.reduce((scores, line) => scoreGame(line, scores), {});
     const sortedScores = sortScores(finalScores);
-    return formatOutput(sortedScores);
+    return rankAndFormatScores(sortedScores);
 }

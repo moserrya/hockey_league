@@ -1,5 +1,5 @@
 
-import { scoreGame, sortScores, formatOutput, processInput } from '../src/cli';
+import { scoreGame, sortScores, rankAndFormatScores, processInput } from '../src/cli';
 
 describe("scoreGame", () => {
     it("should add 3 points to the winner", () => {
@@ -42,7 +42,7 @@ describe("sortScores", () => {
     });
 });
 
-describe("formatOutput", () => {
+describe("rankAndFormatScores", () => {
     it("should format the scores correctly", () => {
         const sortedScores: [string, number][] = [
             ["Tarantulas", 6],
@@ -50,7 +50,7 @@ describe("formatOutput", () => {
             ["Snakes", 1],
             ["FC Awesome", 1]
         ];
-        const formattedOutput = formatOutput(sortedScores);
+        const formattedOutput = rankAndFormatScores(sortedScores);
         expect(formattedOutput).toBe(
             "1. Tarantulas: 6 pts\n" +
             "2. Lions: 5 pts\n" +
@@ -66,7 +66,7 @@ describe("formatOutput", () => {
             ["Snakes", 3],
             ["FC Awesome", 1]
         ];
-        const formattedOutput = formatOutput(sortedScores);
+        const formattedOutput = rankAndFormatScores(sortedScores);
         expect(formattedOutput).toBe(
             "1. Lions: 5 pts\n" +
             "1. Tarantulas: 5 pts\n" +
