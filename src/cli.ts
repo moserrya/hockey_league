@@ -1,51 +1,42 @@
-import * as readline from "readline";
+export function scoreGame(input: string, currentScores: { [key: string]: number }): { [key: string]: number } {
+    const [team1Data, team2Data] = input.split(", ");
 
-let input: string[] = [];
+    const team1Parts = team1Data.split(/\s+(?=\d+$)/);
+    const team2Parts = team2Data.split(/\s+(?=\d+$)/);
 
-let output: string = "";
+    const [team1Name, team1Score] = team1Parts;
+    const [team2Name, team2Score] = team2Parts;
 
-let scores: { [key: string]: number } = {};
+    const score1 = parseInt(team1Score);
+    const score2 = parseInt(team2Score);
 
-const WINNING_SCORE = 3;
-const TIE_SCORE = 1;
-const LOSING_SCORE = 0;
+    const updatedScores = { ...currentScores };
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    terminal: false
-});
+    if (score1 > score2) {
+        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + 3;
+        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + 0;
+    } else if (score1 < score2) {
+        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + 0;
+        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + 3;
+    } else {
+        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + 1;
+        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + 1;
+    }
 
-rl.on('line', (line: string) => {
-    input.push(line);
-});
-
-rl.on('close', () => {
-    processInput(input);
-});
-
-function processInput(input: string[]) {
-    input.forEach(line => {
-        scoreGame(line);
-    });
-
-    const sortedScores = sortScores();
-
-    formatOutput(sortedScores);
-
-    console.log(output);
+    return updatedScores;
 }
 
-function sortScores() {
-    const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-    return sortedScores;
+export function sortScores(scores: { [key: string]: number }): [string, number][] {
+    return Object.entries(scores).sort((a, b) => b[1] - a[1]);
 }
 
-function formatOutput(sortedScores: [string, number][]) {
+export function formatOutput(sortedScores: [string, number][]): string {
     let pointWord: string;
     let rank: number = 1;
     let lastScore: number | null = null;
     let sameRankCount: number = 0;
-    
+    let output = "";
+
     sortedScores.forEach(([teamName, teamScore]) => {
         pointWord = teamScore === 1 ? "pt" : "pts";
         if (lastScore !== null && teamScore < lastScore) {
@@ -58,30 +49,11 @@ function formatOutput(sortedScores: [string, number][]) {
         lastScore = teamScore;
     });
 
-    output = output.trim();
+    return output.trim();
 }
 
-function scoreGame(input: string) {
-    const [team1Data, team2Data] = input.split(", ");
-
-    const team1Parts = team1Data.split(/\s+(?=\d+$)/);
-    const team2Parts = team2Data.split(/\s+(?=\d+$)/);
-
-    const [team1Name, team1Score] = team1Parts;
-    const [team2Name, team2Score] = team2Parts;
-
-    const score1 = parseInt(team1Score);
-    const score2 = parseInt(team2Score);
-
-    if (score1 > score2) {
-        scores[team1Name] = (scores[team1Name] || 0) + WINNING_SCORE;
-        scores[team2Name] = (scores[team2Name] || 0) + LOSING_SCORE;
-    } else if (score1 < score2) {
-        scores[team1Name] = (scores[team1Name] || 0) + LOSING_SCORE;
-        scores[team2Name] = (scores[team2Name] || 0) + WINNING_SCORE;
-    } else {
-        scores[team1Name] = (scores[team1Name] || 0) + TIE_SCORE;
-        scores[team2Name] = (scores[team2Name] || 0) + TIE_SCORE;
-    }
+export function processInput(input: string[]): string {
+    const finalScores = input.reduce((scores, line) => scoreGame(line, scores), {});
+    const sortedScores = sortScores(finalScores);
+    return formatOutput(sortedScores);
 }
-
