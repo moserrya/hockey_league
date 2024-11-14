@@ -1,4 +1,10 @@
 export function scoreGame(input: string, currentScores: { [key: string]: number }): { [key: string]: number } {
+    const POINTS = {
+        win: 3,
+        loss: 0,
+        draw: 1
+    };
+
     const [team1Data, team2Data]: string[] = input.split(", ");
 
     const team1Parts: string[] = team1Data.split(/\s+(?=\d+$)/);
@@ -13,14 +19,14 @@ export function scoreGame(input: string, currentScores: { [key: string]: number 
     const updatedScores: { [key: string]: number }  = { ...currentScores };
 
     if (score1 > score2) {
-        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + 3;
-        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + 0;
+        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.win;
+        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.loss;
     } else if (score1 < score2) {
-        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + 0;
-        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + 3;
+        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.loss;
+        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.win;
     } else {
-        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + 1;
-        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + 1;
+        updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.draw;
+        updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.draw;
     }
 
     return updatedScores;
