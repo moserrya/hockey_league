@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "start": "npm run build && node dist/index.js"
+    "start": "npm run build && node dist/index.js",
+    "standings": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
