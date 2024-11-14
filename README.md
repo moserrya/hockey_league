@@ -12,7 +12,7 @@ To run this project, you need to have the following installed:
 
 1. Clone the repository:
    ```sh
-   git clone <repository-url>
+   git clone git@github.com:moserrya/hockey_league.git
    cd hockey_league
    ```
 
@@ -36,7 +36,7 @@ This will generate the compiled files in the `dist` directory.
 
 ### Run the Application
 
-To run the application, use:
+To run the application, pipe the input:
 ```sh
 cat input.txt | npm start
 ```
@@ -69,7 +69,8 @@ This will run all the tests and provide output indicating whether they passed or
 ## Available Scripts
 
 - **`npm run build`**: Compiles the TypeScript code into JavaScript and outputs it to the `dist` directory.
-- **`npm start`**: Runs the compiled application, allowing you to provide input via `stdin`.
+- **`npm start`**: This is the main script that compiles the code and runs the application, allowing you to provide input via `stdin`.
+- **`npm run standings`**: This is a shortcut for running the application after compiling the code through `npm run build`.
 - **`npm test`**: Runs the automated tests using Jest.
 
 ## Project Structure
@@ -88,7 +89,7 @@ hockey_league/
 
 ## Notes
 
-- Please make sure to run `npm run build` before attempting to run the application.
+- The application can be run directly using `npm start` as it automatically runs the build command first.
 - If you need to make any modifications, remember to recompile using `npm run build`.
 - The input format is important, as the application expects each line to represent a match result with two teams and their respective scores.
 
