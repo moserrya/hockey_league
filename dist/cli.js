@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scoreGame = scoreGame;
 exports.sortScores = sortScores;
-exports.formatOutput = formatOutput;
+exports.rankAndFormatScores = rankAndFormatScores;
 exports.processInput = processInput;
 function scoreGame(input, currentScores) {
     const [team1Data, team2Data] = input.split(", ");
@@ -30,7 +30,7 @@ function scoreGame(input, currentScores) {
 function sortScores(scores) {
     return Object.entries(scores).sort((a, b) => b[1] - a[1]);
 }
-function formatOutput(sortedScores) {
+function rankAndFormatScores(sortedScores) {
     let pointWord;
     let rank = 1;
     let lastScore = null;
@@ -53,5 +53,5 @@ function formatOutput(sortedScores) {
 function processInput(input) {
     const finalScores = input.reduce((scores, line) => scoreGame(line, scores), {});
     const sortedScores = sortScores(finalScores);
-    return formatOutput(sortedScores);
+    return rankAndFormatScores(sortedScores);
 }
