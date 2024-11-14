@@ -1,6 +1,6 @@
 # Hockey League CLI
 
-This is a command-line tool built in TypeScript that calculates and ranks the results of hockey matches. It reads match data from `stdin` and outputs team rankings based on the results.
+This is a command-line tool built in TypeScript that calculates and ranks the results of hockey matches. It reads match data from `stdin` and outputs team rankings based on the results. The ranking is calculated based on the number of points with teams receiving 3 points for a win, 1 point for a tie, and 0 points for a loss.
 
 ## Prerequisites
 
