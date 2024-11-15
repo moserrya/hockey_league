@@ -14,19 +14,19 @@ function parseInput(input) {
 }
 function determineResult(score1, score2) {
     if (score1 > score2)
-        return 'win';
+        return 'team1Win';
     if (score1 < score2)
-        return 'loss';
+        return 'team2Win';
     return 'draw';
 }
 function updateScores(team1Name, team2Name, result, currentScores) {
     const POINTS = { win: 3, loss: 0, draw: 1 };
     const updatedScores = Object.assign({}, currentScores);
-    if (result === 'win') {
+    if (result === 'team1Win') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.win;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.loss;
     }
-    else if (result === 'loss') {
+    else if (result === 'team2Win') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.loss;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.win;
     }
