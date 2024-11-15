@@ -7,25 +7,25 @@ function parseInput(input: string): [string, number, string, number] {
     return [team1Name, parseInt(team1Score), team2Name, parseInt(team2Score)];
 }
 
-function determineResult(score1: number, score2: number): 'win' | 'loss' | 'draw' {
-    if (score1 > score2) return 'win';
-    if (score1 < score2) return 'loss';
+function determineResult(score1: number, score2: number): 'team1Win' | 'team2Win' | 'draw' {
+    if (score1 > score2) return 'team1Win';
+    if (score1 < score2) return 'team2Win';
     return 'draw';
 }
 
 function updateScores(
     team1Name: string,
     team2Name: string,
-    result: 'win' | 'loss' | 'draw',
+    result: 'team1Win' | 'team2Win' | 'draw',
     currentScores: { [key: string]: number }
 ): { [key: string]: number } {
     const POINTS = { win: 3, loss: 0, draw: 1 };
     const updatedScores: { [key: string]: number } = { ...currentScores };
 
-    if (result === 'win') {
+    if (result === 'team1Win') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.win;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.loss;
-    } else if (result === 'loss') {
+    } else if (result === 'team2Win') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.loss;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.win;
     } else {
