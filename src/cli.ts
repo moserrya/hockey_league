@@ -1,27 +1,31 @@
-export function scoreGame(input: string, currentScores: { [key: string]: number }): { [key: string]: number } {
-    const POINTS = {
-        win: 3,
-        loss: 0,
-        draw: 1
-    };
-
+function parseInput(input: string): [string, number, string, number] {
     const [team1Data, team2Data]: string[] = input.split(", ");
-
     const team1Parts: string[] = team1Data.split(/\s+(?=\d+$)/);
     const team2Parts: string[] = team2Data.split(/\s+(?=\d+$)/);
-
     const [team1Name, team1Score]: string[] = team1Parts;
     const [team2Name, team2Score]: string[] = team2Parts;
+    return [team1Name, parseInt(team1Score), team2Name, parseInt(team2Score)];
+}
 
-    const score1: number = parseInt(team1Score);
-    const score2: number = parseInt(team2Score);
+function determineResult(score1: number, score2: number): 'win' | 'loss' | 'draw' {
+    if (score1 > score2) return 'win';
+    if (score1 < score2) return 'loss';
+    return 'draw';
+}
 
-    const updatedScores: { [key: string]: number }  = { ...currentScores };
+function updateScores(
+    team1Name: string,
+    team2Name: string,
+    result: 'win' | 'loss' | 'draw',
+    currentScores: { [key: string]: number }
+): { [key: string]: number } {
+    const POINTS = { win: 3, loss: 0, draw: 1 };
+    const updatedScores: { [key: string]: number } = { ...currentScores };
 
-    if (score1 > score2) {
+    if (result === 'win') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.win;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.loss;
-    } else if (score1 < score2) {
+    } else if (result === 'loss') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.loss;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.win;
     } else {
@@ -30,6 +34,12 @@ export function scoreGame(input: string, currentScores: { [key: string]: number 
     }
 
     return updatedScores;
+}
+
+export function scoreGame(input: string, currentScores: { [key: string]: number }): { [key: string]: number } {
+    const [team1Name, score1, team2Name, score2] = parseInput(input);
+    const result = determineResult(score1, score2);
+    return updateScores(team1Name, team2Name, result, currentScores);
 }
 
 export function sortScores(scores: { [key: string]: number }): [string, number][] {

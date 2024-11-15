@@ -4,25 +4,29 @@ exports.scoreGame = scoreGame;
 exports.sortScores = sortScores;
 exports.rankAndFormatScores = rankAndFormatScores;
 exports.processInput = processInput;
-function scoreGame(input, currentScores) {
-    const POINTS = {
-        win: 3,
-        loss: 0,
-        draw: 1
-    };
+function parseInput(input) {
     const [team1Data, team2Data] = input.split(", ");
     const team1Parts = team1Data.split(/\s+(?=\d+$)/);
     const team2Parts = team2Data.split(/\s+(?=\d+$)/);
     const [team1Name, team1Score] = team1Parts;
     const [team2Name, team2Score] = team2Parts;
-    const score1 = parseInt(team1Score);
-    const score2 = parseInt(team2Score);
+    return [team1Name, parseInt(team1Score), team2Name, parseInt(team2Score)];
+}
+function determineResult(score1, score2) {
+    if (score1 > score2)
+        return 'win';
+    if (score1 < score2)
+        return 'loss';
+    return 'draw';
+}
+function updateScores(team1Name, team2Name, result, currentScores) {
+    const POINTS = { win: 3, loss: 0, draw: 1 };
     const updatedScores = Object.assign({}, currentScores);
-    if (score1 > score2) {
+    if (result === 'win') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.win;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.loss;
     }
-    else if (score1 < score2) {
+    else if (result === 'loss') {
         updatedScores[team1Name] = (updatedScores[team1Name] || 0) + POINTS.loss;
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.win;
     }
@@ -31,6 +35,11 @@ function scoreGame(input, currentScores) {
         updatedScores[team2Name] = (updatedScores[team2Name] || 0) + POINTS.draw;
     }
     return updatedScores;
+}
+function scoreGame(input, currentScores) {
+    const [team1Name, score1, team2Name, score2] = parseInput(input);
+    const result = determineResult(score1, score2);
+    return updateScores(team1Name, team2Name, result, currentScores);
 }
 function sortScores(scores) {
     return Object.entries(scores).sort((a, b) => b[1] - a[1]);
