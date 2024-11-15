@@ -42,7 +42,12 @@ function scoreGame(input, currentScores) {
     return updateScores(team1Name, team2Name, result, currentScores);
 }
 function sortScores(scores) {
-    return Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    return Object.entries(scores).sort((a, b) => {
+        if (b[1] !== a[1]) {
+            return b[1] - a[1]; // Sort by score descending
+        }
+        return a[0].localeCompare(b[0]); // Sort by team name ascending
+    });
 }
 function rankAndFormatScores(sortedScores) {
     let pointWord;
