@@ -38,12 +38,12 @@ This will generate the compiled files in the `dist` directory.
 
 To run the application, pipe the input:
 ```sh
-cat input.txt | npm start
+cat input.txt | npm run standings
 ```
 
 Alternatively, you can use input redirection:
 ```sh
-npm start < input.txt
+npm run standings < input.txt
 ```
 
 The input should be in the format:
@@ -72,6 +72,7 @@ This will run all the tests and provide output indicating whether they passed or
 - **`npm start`**: This is the main script that compiles the code and runs the application, allowing you to provide input via `stdin`.
 - **`npm run standings`**: This is a shortcut for running the application after compiling the code through `npm run build`.
 - **`npm test`**: Runs the automated tests using Jest.
+- **`bash scripts/run.sh`**: This script compiles the code and runs the application and suppresses the build output.
 
 ## Project Structure
 
