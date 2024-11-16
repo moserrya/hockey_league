@@ -19,7 +19,7 @@ function updateScores(
     result: 'team1Win' | 'team2Win' | 'draw',
     currentScores: { [key: string]: number }
 ): { [key: string]: number } {
-    const POINTS = { win: 3, loss: 0, draw: 1 };
+    const POINTS = { win: 3, loss: 0, draw: 1 } as const;
     const updatedScores: { [key: string]: number } = { ...currentScores };
 
     if (result === 'team1Win') {
