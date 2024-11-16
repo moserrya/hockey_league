@@ -43,12 +43,9 @@ export function scoreGame(input: string, currentScores: { [key: string]: number 
 }
 
 export function sortScores(scores: { [key: string]: number }): [string, number][] {
-    return Object.entries(scores).sort((a, b) => {
-        if (b[1] !== a[1]) {
-            return b[1] - a[1]; // Sort by score descending
-        }
-        return a[0].localeCompare(b[0]); // Sort by team name ascending
-    });
+    return Object.entries(scores).sort((a, b) =>
+        b[1] !== a[1] ? b[1] - a[1] : a[0].localeCompare(b[0])
+    );
 }
 
 export function rankAndFormatScores(sortedScores: [string, number][]): string {
